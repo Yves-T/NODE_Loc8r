@@ -1,0 +1,18 @@
+{
+  "dev": {
+    "api": {
+      "server": "http://localhost:3000"
+    },
+    "db": {
+      "dbUri": "mongodb://localhost/Loc8r"
+    }
+  },
+  "production": {
+    "api": {
+      "server": "http://localhost:3000"
+    },
+    "db": {
+      "dbUri": "mongodb://localhost/Loc8r"
+    }
+  }
+}
