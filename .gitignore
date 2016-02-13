@@ -3,3 +3,5 @@ node_modules
 db/data
 .idea
 debug.log
+exceptions.log
+public/angular/loc8r.min.js
