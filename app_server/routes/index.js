@@ -4,7 +4,7 @@ var ctrlLocations = require('../controllers/locations');
 var ctrlOther = require('../controllers/others');
 
 // Location pages
-router.get('/', ctrlLocations.homelist);
+router.get('/', ctrlOther.angularApp);
 router.get('/location/:locationid', ctrlLocations.locationInfo);
 router.get('/location/:locationid/review/new', ctrlLocations.addReview);
 router.post('/location/:locationid/review/new', ctrlLocations.doAddReview);
