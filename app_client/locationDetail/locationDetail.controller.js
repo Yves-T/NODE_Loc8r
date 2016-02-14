@@ -19,7 +19,10 @@
             });
 
         vm.popupReviewForm = function () {
-            alert("Let's add a review!");
+            var modalInstance = $uibModal.open({
+                templateUrl: '/reviewModal/reviewModal.view.html',
+                controller: 'reviewModalCtrl as vm',
+            });
         };
     }
 })();
