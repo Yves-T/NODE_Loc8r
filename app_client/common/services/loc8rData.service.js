@@ -5,8 +5,13 @@
             return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=30');
         };
 
+        var locationById = function (locationid) {
+            return $http.get('/api/locations/' + locationid);
+        };
+
         return {
-            locationByCoords: locationByCoords
+            locationByCoords: locationByCoords,
+            locationById : locationById
         }
     };
 
