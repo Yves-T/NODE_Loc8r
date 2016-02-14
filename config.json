@@ -5,14 +5,20 @@
     },
     "db": {
       "dbUri": "mongodb://localhost/Loc8r"
+    },
+    "server" : {
+      "port" : "3000"
     }
   },
   "production": {
     "api": {
-      "server": "http://localhost:3000"
+      "server": "http://localhost:8080"
     },
     "db": {
       "dbUri": "mongodb://localhost/Loc8r"
+    },
+    "server" : {
+      "port" : "8080"
     }
   }
 }
