@@ -23,7 +23,8 @@ var appClientFiles = [
     'app_client/common/services/loc8rData.service.js',
     'app_client/common/filters/formatDistance.filter.js',
     'app_client/common/directives/ratingStars/ratingStars.directive.js',
-    'app_client/common/footerGeneric/footerGeneric.directive.js'
+    'app_client/common/footerGeneric/footerGeneric.directive.js',
+    'app_client/common/directives/navigation/navigation.directive.js'
 ];
 
 var uglified = uglifyJs.minify(appClientFiles, { compress : false });
