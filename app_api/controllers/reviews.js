@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Loc = mongoose.model('Location');
 var logger = require('./../../util/logger');
+var User = mongoose.model('User');
 
 var sendJsonResponse = function (res, status, content) {
     res.status(status);
@@ -9,36 +10,68 @@ var sendJsonResponse = function (res, status, content) {
 
 module.exports.reviewsCreate = function (req, res) {
 
-    if (req.params.locationid) {
-        console.log('location id');
-        console.log(req.params.locationid);
-        Loc
-            .findById(req.params.locationid)
-            .select('reviews')
-            .exec(
-                function (err, location) {
-                    if (err) {
-                        logger.error('reviews create error:', err);
-                        sendJsonResponse(res, 400, err);
-                    } else {
-                        logger.info('reviews create error:', err);
-                        doAddReview(req, res, location);
+    getAuthor(req, res, function (req, res, userName) {
+
+        if (req.params.locationid) {
+            console.log('location id');
+            console.log(req.params.locationid);
+            Loc
+                .findById(req.params.locationid)
+                .select('reviews')
+                .exec(
+                    function (err, location) {
+                        if (err) {
+                            logger.error('reviews create error:', err);
+                            sendJsonResponse(res, 400, err);
+                        } else {
+                            logger.info('reviews create error:', err);
+                            doAddReview(req, res, location, userName);
+                        }
                     }
-                }
-            );
-    } else {
-        sendJsonResponse(res, 404, {
-            "message": "Not found, locationid required"
-        });
-    }
+                );
+        } else {
+            sendJsonResponse(res, 404, {
+                "message": "Not found, locationid required"
+            });
+        }
+    });
 };
 
-var doAddReview = function (req, res, location) {
+var getAuthor = function (req, res, callback) {
+    console.log("Finding author with email " + req.payload.email);
+    if (req.payload.email) {
+        User
+            .findOne({email: req.payload.email})
+            .exec(function (err, user) {
+                if (!user) {
+                    sendJsonResponse(res, 404, {
+                        "message": "User not found"
+                    });
+                    return;
+                } else if (err) {
+                    logger.error('get author error:', err);
+                    sendJsonResponse(res, 404, err);
+                    return;
+                }
+                console.log(user);
+                callback(req, res, user.name);
+            });
+
+    } else {
+        sendJsonResponse(res, 404, {
+            "message": "User not found"
+        });
+        return;
+    }
+
+};
+
+var doAddReview = function (req, res, location, author) {
     if (!location) {
         sendJsonResponse(res, 404, "locationid not found");
     } else {
         location.reviews.push({
-            author: req.body.author,
+            author: author,
             rating: req.body.rating,
             reviewText: req.body.reviewText
         });
