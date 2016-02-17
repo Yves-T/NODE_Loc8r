@@ -6,3 +6,4 @@ debug.log
 exceptions.log
 public/angular/loc8r.min.js
 .env
+public/angular/out.js.map
